@@ -18,6 +18,14 @@ public final class SerialInputData extends ShowInput {
      * Season list
      */
     private final ArrayList<Season> seasons;
+    /**
+     * Number of users that rated the season
+     */
+    private ArrayList<Integer> seasonNumRating;
+    /**
+     * Average rating
+     */
+    private ArrayList<Float> seasonsRating;
 
     public SerialInputData(final String title, final ArrayList<String> cast,
                            final ArrayList<String> genres,

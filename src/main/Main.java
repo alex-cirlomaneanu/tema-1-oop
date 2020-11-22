@@ -5,6 +5,7 @@ import checker.Checker;
 import common.Constants;
 import fileio.*;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +15,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
-import static common.Constants.*;
 
 /**
  * The entry point to this homework. It runs the checker that tests your implentation.
@@ -77,16 +77,28 @@ public final class Main {
         List<ActorInputData> inputActors = input.getActors();
         List<MovieInputData> inputMovies = input.getMovies();
         List<SerialInputData> inputSerials = input.getSerials();
-        for(ActionInputData action : inputActions){
+        for (ActionInputData action : inputActions) {
             switch (action.getActionType()) {
                 case Constants.COMMAND:
-                    if (action.getType().equals(FAVORITE)) {
+                    if (action.getType().equals(Constants.FAVORITE)) {
                         ActionDoer favorite = new ActionDoer();
-                        arrayResult.add(favorite.addFavoirte(action, inputUsers, fileWriter));
+                        arrayResult.add(favorite.addFavourite(action, inputUsers, fileWriter));
                     }
-                    if(action.getType().equals(VIEW)){
-                        System.out.println("mama");
+                    if  (action.getType().equals(Constants.VIEW)) {
+                        ActionDoer view = new ActionDoer();
+                        arrayResult.add(view.addView(action, inputUsers, fileWriter));
                     }
+                    if (action.getType().equals(Constants.RATING))  {
+                        ActionDoer rating = new ActionDoer();
+                        JSONObject message;
+                        message = rating.addRating(
+                                action, inputUsers, inputMovies, inputSerials, fileWriter);
+                        arrayResult.add(message);
+                    }
+                    break;
+                case Constants.QUERY:
+                    break;
+                case Constants.RECOMMENDATION:
                     break;
                 default:
                     break;
