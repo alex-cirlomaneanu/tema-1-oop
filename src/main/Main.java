@@ -14,6 +14,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
+import static common.Constants.*;
+
 /**
  * The entry point to this homework. It runs the checker that tests your implentation.
  */
@@ -70,11 +72,27 @@ public final class Main {
         JSONArray arrayResult = new JSONArray();
 
         //TODO add here the entry point to your implementation
-//        List<UserInputData> inputUsers = input.getUsers();
-//        List<ActionInputData> inputActions = input.getCommands();
-//        List<ActorInputData> inputActors = input.getActors();
-//        List<MovieInputData> inputMovies = input.getMovies();
-//        List<SerialInputData> inputSerials = input.getSerials();
+        List<UserInputData> inputUsers = input.getUsers();
+        List<ActionInputData> inputActions = input.getCommands();
+        List<ActorInputData> inputActors = input.getActors();
+        List<MovieInputData> inputMovies = input.getMovies();
+        List<SerialInputData> inputSerials = input.getSerials();
+        for(ActionInputData action : inputActions){
+            switch (action.getActionType()) {
+                case Constants.COMMAND:
+                    if (action.getType().equals(FAVORITE)) {
+                        ActionDoer favorite = new ActionDoer();
+                        arrayResult.add(favorite.addFavoirte(action, inputUsers, fileWriter));
+                    }
+                    if(action.getType().equals(VIEW)){
+                        System.out.println("mama");
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
 
 
         fileWriter.closeJSON(arrayResult);
