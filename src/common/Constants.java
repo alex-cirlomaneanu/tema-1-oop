@@ -53,7 +53,7 @@ public final class Constants {
     public static final String MESSAGE = "message";
     public static final String QUERY = "query";
     public static final String COMMAND = "command";
-    public static final String RECOMMENDATION = "Recommendation";
+    public static final String RECOMMENDATION = "recommendation";
 
     // checker constants
     public static final String ID_STRING = "id";
@@ -78,4 +78,10 @@ public final class Constants {
     public static final String FAVORITE = "favorite";
     public static final String RATING = "rating";
     public static final String VIEW = "view";
+    public static final String ASC = "asc";
+    public static final String DSC = "dsc";
+    public static final String AVERAGE = "average";
+    //  AWARDS_INDEX is the postion of the awards string in a query filter
+    public static final int AWARDS_INDEX = 3;
+    public static final int WORDS_INDEX = 2;
 }

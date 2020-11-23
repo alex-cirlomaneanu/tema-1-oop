@@ -25,11 +25,11 @@ public final class Season {
     /**
      * Number of users that rated the film
      */
-    private static int numRating;
+    private int numRating;
     /**
      * Average rating
      */
-    private static float rating;
+    private double rating;
 
     public Season(final int currentSeason, final int duration) {
         this.currentSeason = currentSeason;
@@ -41,7 +41,7 @@ public final class Season {
         return numRating;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
@@ -62,11 +62,11 @@ public final class Season {
 //        this.ratings = ratings;
 //    }
 
-    public void setNumRating(int numRating) {
+    public void setNumRating(final int numRating) {
         this.numRating = numRating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(final double rating) {
         this.rating = rating;
     }
 

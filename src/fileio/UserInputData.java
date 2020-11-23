@@ -33,6 +33,10 @@ public final class UserInputData {
      * Shows added to favorites
      */
     private final ArrayList<String> ratedShows;
+    /**
+     * All ratings given by user
+     */
+    private int ratingNumber;
 
     public UserInputData(final String username, final String subscriptionType,
                          final Map<String, Integer> history,
@@ -43,7 +47,7 @@ public final class UserInputData {
         this.history = history;
         this.ratedMovies = new ArrayList<String>();
         this.ratedShows = new ArrayList<String>();
-
+        this.setRatingNumber(0);
 
     }
 
@@ -71,6 +75,13 @@ public final class UserInputData {
         return ratedShows;
     }
 
+    public int getRatingNumber()   {
+        return ratingNumber;
+    }
+
+    public void setRatingNumber(final int ratingNumber) {
+        this.ratingNumber = ratingNumber;
+    }
 
     @Override
     public String toString() {

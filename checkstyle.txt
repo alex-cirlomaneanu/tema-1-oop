@@ -1,8 +1,7 @@
 Starting audit...
-[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\entertainment\Season.java:65:30: Parameter numRating should be final. [FinalParameters]
-[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\entertainment\Season.java:69:27: Parameter rating should be final. [FinalParameters]
-[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\fileio\MovieInputData.java:46:30: Parameter numRating should be final. [FinalParameters]
-[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\fileio\MovieInputData.java:50:27: Parameter rating should be final. [FinalParameters]
-[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\main\Main.java:6:14: Using the '.*' form of import should be avoided - fileio.*. [AvoidStarImport]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\fileio\ActorInputData.java:82:32: Parameter actorRating should be final. [FinalParameters]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\fileio\ActorInputData.java:90:30: Parameter ratingNum should be final. [FinalParameters]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\main\Main.java:9:14: Using the '.*' form of import should be avoided - fileio.*. [AvoidStarImport]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\queries\ExecuteActorsAwardsQuery.java:3:8: Unused import - actor.ActorsAwards. [UnusedImports]
 Audit done.
-Checkstyle ends with 5 errors.
+Checkstyle ends with 4 errors.
