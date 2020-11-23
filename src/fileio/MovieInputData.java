@@ -15,11 +15,11 @@ public final class MovieInputData extends ShowInput {
     /**
      * Number of users that rated the film
      */
-    private static int numRating;
+    private int numRating;
     /**
      * Average rating
      */
-    private static float rating;
+    private double rating;
 
     public MovieInputData(final String title, final ArrayList<String> cast,
                           final ArrayList<String> genres, final int year,
@@ -39,15 +39,15 @@ public final class MovieInputData extends ShowInput {
         return numRating;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setNumRating(int numRating) {
+    public void setNumRating(final int numRating) {
         this.numRating = numRating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(final double rating) {
         this.rating = rating;
     }
 

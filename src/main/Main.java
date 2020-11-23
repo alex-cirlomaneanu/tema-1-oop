@@ -2,10 +2,17 @@ package main;
 
 import checker.Checkstyle;
 import checker.Checker;
+import commands.ExecuteFavorite;
+import commands.ExecuteRating;
+import commands.ExecuteView;
 import common.Constants;
 import fileio.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import queries.ExecuteActorsAverageQuery;
+import queries.ExecuteActorsAwardsQuery;
+import queries.ExecuteActorsDescriptionQuery;
+import queries.ExecuteUsersQuery;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,25 +85,66 @@ public final class Main {
         List<MovieInputData> inputMovies = input.getMovies();
         List<SerialInputData> inputSerials = input.getSerials();
         for (ActionInputData action : inputActions) {
+            /**
+             * Execute all actions given in input by their type
+             * */
             switch (action.getActionType()) {
+                //  Case actiion is a command (favorite, view, rating)
                 case Constants.COMMAND:
+                    //  comandResult is the object that will be written in the result array
+                    JSONObject commandResult = new JSONObject();
                     if (action.getType().equals(Constants.FAVORITE)) {
-                        ActionDoer favorite = new ActionDoer();
-                        arrayResult.add(favorite.addFavourite(action, inputUsers, fileWriter));
+                        commandResult = new ExecuteFavorite().addFavorite(
+                                action,
+                                inputUsers,
+                                fileWriter);
                     }
+
                     if  (action.getType().equals(Constants.VIEW)) {
-                        ActionDoer view = new ActionDoer();
-                        arrayResult.add(view.addView(action, inputUsers, fileWriter));
+                        commandResult = new ExecuteView().addView(action, inputUsers, fileWriter);
                     }
+
                     if (action.getType().equals(Constants.RATING))  {
-                        ActionDoer rating = new ActionDoer();
-                        JSONObject message;
-                        message = rating.addRating(
+                        commandResult = new ExecuteRating().addRating(
                                 action, inputUsers, inputMovies, inputSerials, fileWriter);
-                        arrayResult.add(message);
                     }
+
+                    arrayResult.add(commandResult);
                     break;
+
+                //  Case actiion is a query (users, actors, videos)
                 case Constants.QUERY:
+                    //  queryResult is the object that will be written in the result array
+                    JSONObject queryResult = new JSONObject();
+                    //  Users query
+                    if (action.getObjectType().equals(Constants.USERS)) {
+                        queryResult = new ExecuteUsersQuery().queryUsers(action,
+                                inputUsers,
+                                fileWriter);
+                    }
+
+                    //  Actors query by average rating
+                    if (action.getObjectType().equals(Constants.ACTORS)
+                            && (action.getCriteria().equals(Constants.AVERAGE)))    {
+                        queryResult = new ExecuteActorsAverageQuery().queryActorsAverage(action,
+                                inputActors,
+                                inputMovies,
+                                inputSerials,
+                                fileWriter);
+                    }
+                    if (action.getObjectType().equals(Constants.ACTORS)
+                            && (action.getCriteria().equals(Constants.AWARDS)))    {
+                        queryResult =  new ExecuteActorsAwardsQuery().queryActorsAwards(action,
+                                inputActors,
+                                fileWriter);
+                    }
+                    if (action.getObjectType().equals(Constants.ACTORS)
+                            && (action.getCriteria().equals(Constants.FILTER_DESCRIPTIONS)))    {
+                        queryResult =  new ExecuteActorsDescriptionQuery().queryActorsWords(action,
+                                inputActors,
+                                fileWriter);
+                    }
+                    arrayResult.add(queryResult);
                     break;
                 case Constants.RECOMMENDATION:
                     break;
