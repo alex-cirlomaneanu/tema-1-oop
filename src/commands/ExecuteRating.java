@@ -58,8 +58,6 @@ public class ExecuteRating {
                                         + rate.getGrade()
                                         + " by "
                                         + user.getUsername();
-//                                JSONObject jsonObject = fileWriter.writeFile(id, null, message);
-//                                return jsonObject;
                             }
                         }
                     }
@@ -104,8 +102,6 @@ public class ExecuteRating {
                                         + rate.getGrade()
                                         + " by "
                                         + user.getUsername();
-//                                JSONObject jsonObject = fileWriter.writeFile(id, null, message);
-//                                return jsonObject;
                             }
                         }
                     }

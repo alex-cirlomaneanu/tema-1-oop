@@ -1,7 +1,18 @@
 Starting audit...
-[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\fileio\ActorInputData.java:82:32: Parameter actorRating should be final. [FinalParameters]
-[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\fileio\ActorInputData.java:90:30: Parameter ratingNum should be final. [FinalParameters]
-[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\main\Main.java:9:14: Using the '.*' form of import should be avoided - fileio.*. [AvoidStarImport]
-[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\queries\ExecuteActorsAwardsQuery.java:3:8: Unused import - actor.ActorsAwards. [UnusedImports]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\additional\FindFavoriteOccurrence.java:10:16: Name 'MovieFavOccurrence' must match pattern '^[a-z][a-zA-Z0-9]*$'. [MethodName]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\additional\FindFavoriteOccurrence.java:20:5: Class 'FindFavoriteOccurrence' looks like designed for extension (can be subclassed), but the method 'ShowFavOccurrence' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'FindFavoriteOccurrence' final or making the method 'ShowFavOccurrence' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\additional\FindFavoriteOccurrence.java:20:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\additional\FindFavoriteOccurrence.java:20:16: Name 'ShowFavOccurrence' must match pattern '^[a-z][a-zA-Z0-9]*$'. [MethodName]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\additional\FindViewsNumber.java:20:5: Class 'FindViewsNumber' looks like designed for extension (can be subclassed), but the method 'findViewsShow' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'FindViewsNumber' final or making the method 'findViewsShow' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\additional\FindViewsNumber.java:20:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\additional\ShowRatingCalculator.java:12:36: Parameter show should be final. [FinalParameters]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\additional\ShowTotalLength.java:11:31: Parameter show should be final. [FinalParameters]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\main\Main.java:6:14: Using the '.*' form of import should be avoided - fileio.*. [AvoidStarImport]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\main\VideosDB.java:8:15: Using the '.*' form of import should be avoided - queries.*. [AvoidStarImport]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\queries\ExecuteActorsAverageQuery.java:3:8: Unused import - additional.ShowRatingCalculator. [UnusedImports]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\queries\ExecuteSerialsQuery.java:8:14: Using the '.*' form of import should be avoided - fileio.*. [AvoidStarImport]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\queries\ExecuteSerialsQuery.java:53:17: switch without "default" clause. [MissingSwitchDefault]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\queries\ExecuteSerialsQuery.java:105: Line is longer than 100 characters (found 109). [LineLength]
+[ERROR] F:\facultate\an2\teme\tema-1-oop\.\src\queries\ExecuteSerialsQuery.java:121:70: '{' is not preceded with whitespace. [WhitespaceAround]
 Audit done.
-Checkstyle ends with 4 errors.
+Checkstyle ends with 15 errors.
