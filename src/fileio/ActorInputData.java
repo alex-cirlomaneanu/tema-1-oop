@@ -79,7 +79,7 @@ public final class ActorInputData {
         return actorRating;
     }
 
-    public void setActorRating(double actorRating) {
+    public void setActorRating(final double actorRating) {
         this.actorRating = actorRating;
     }
 
@@ -87,7 +87,7 @@ public final class ActorInputData {
         return ratingNum;
     }
 
-    public void setRatingNum(int ratingNum) {
+    public void setRatingNum(final int ratingNum) {
         this.ratingNum = ratingNum;
     }
 

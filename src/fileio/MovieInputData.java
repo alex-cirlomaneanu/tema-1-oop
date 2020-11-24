@@ -26,8 +26,9 @@ public final class MovieInputData extends ShowInput {
                           final int duration) {
         super(title, year, cast, genres);
         this.duration = duration;
-        this.setNumRating(0);
-        this.setRating(0);
+        this.numRating = 0;
+        this.rating = 0;
+
     }
 
     public int getDuration() {

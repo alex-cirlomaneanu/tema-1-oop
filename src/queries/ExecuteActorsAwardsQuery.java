@@ -1,6 +1,6 @@
 package queries;
 
-import actor.ActorsAwards;
+import additional.AwardSum;
 import common.Constants;
 import fileio.ActorInputData;
 import org.json.simple.JSONObject;
@@ -65,7 +65,7 @@ public class ExecuteActorsAwardsQuery {
                     aux.append(", ");
                 }
             }
-        }   else if (query.getSortType().equals(Constants.DSC)) {
+        }   else if (query.getSortType().equals(Constants.DESC)) {
             Collections.reverse(searchActors);
             for (int i = 0; i < listLength; ++i) {
                 aux.append(searchActors.get(i).getName());

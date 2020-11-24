@@ -22,15 +22,21 @@ public class ExecuteUsersQuery {
                                  final List<fileio.UserInputData> users,
                                  final fileio.Writer fileWriter) throws IOException {
 
+        //  id and message will be displayed in result array using fileWriter
         int id = query.getActionId();
         String message = "Query result: [";
+        //  aux will help building the message
         StringBuilder aux = new StringBuilder();
+        //  In this list I will put the users we find
         List<fileio.UserInputData> activeUsers = new ArrayList<>();
+
         for (fileio.UserInputData user : users) {
+            //  Search all users that gave at least one rating and add them to the list
            if   (user.getRatingNumber() > 0)   {
                activeUsers.add(user);
            }
         }
+
         Collections.sort(activeUsers, new Comparator<>() {
             @Override
             public int compare(final fileio.UserInputData user1,
@@ -54,7 +60,7 @@ public class ExecuteUsersQuery {
                     aux.append(", ");
                 }
             }
-        }   else if (query.getSortType().equals(Constants.DSC)) {
+        }   else if (query.getSortType().equals(Constants.DESC)) {
             Collections.reverse(activeUsers);
             for (int i = 0; i < listLength; ++i) {
                 aux.append(activeUsers.get(i).getUsername());

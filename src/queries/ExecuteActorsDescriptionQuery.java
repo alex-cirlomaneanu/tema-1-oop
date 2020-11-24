@@ -19,10 +19,13 @@ public class ExecuteActorsDescriptionQuery {
                                         final List<ActorInputData> actors,
                                         final fileio.Writer fileWriter) throws IOException  {
 
+        //  id and message will be displayed in result array using fileWriter
         int id = query.getActionId();
         String message = "Query result: [";
+        //  aux will help building the message
         StringBuilder aux = new StringBuilder();
         List<fileio.ActorInputData> searchActors = new ArrayList<>();
+
         for (fileio.ActorInputData actor : actors)  {
             boolean hasWordInDescription = true;
             for (String word : query.getFilters().get(Constants.WORDS_INDEX))   {
@@ -55,7 +58,7 @@ public class ExecuteActorsDescriptionQuery {
                     aux.append(", ");
                 }
             }
-        }   else if (query.getSortType().equals(Constants.DSC)) {
+        }   else if (query.getSortType().equals(Constants.DESC)) {
             Collections.reverse(searchActors);
             for (int i = 0; i < listLength; ++i) {
                 aux.append(searchActors.get(i).getName());

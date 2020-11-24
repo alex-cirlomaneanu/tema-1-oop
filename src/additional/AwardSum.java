@@ -1,4 +1,4 @@
-package queries;
+package additional;
 
 import java.util.Collection;
 
