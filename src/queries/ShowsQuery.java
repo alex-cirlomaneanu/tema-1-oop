@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class ExecuteShowsQuery {
+public class ShowsQuery {
     /**
      * @param query the query to execute
      * @param shows list of shows

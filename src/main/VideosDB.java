@@ -1,16 +1,16 @@
 package main;
 
-import commands.ExecuteFavorite;
-import commands.ExecuteRating;
-import commands.ExecuteView;
+import commands.Favorite;
+import commands.Rating;
+import commands.View;
 import common.Constants;
 import org.json.simple.JSONObject;
-import queries.ExecuteActorsAwardsQuery;
-import queries.ExecuteActorsAverageQuery;
-import queries.ExecuteActorsDescriptionQuery;
-import queries.ExecuteMoviesQuery;
-import queries.ExecuteShowsQuery;
-import queries.ExecuteUsersQuery;
+import queries.ActorsAwardsQuery;
+import queries.ActorsAverageQuery;
+import queries.ActorsDescriptionQuery;
+import queries.MoviesQuery;
+import queries.ShowsQuery;
+import queries.UsersQuery;
 import recommendations.BestUnseen;
 import recommendations.SearchRecommendation;
 import recommendations.FavoriteRecommendation;
@@ -51,10 +51,10 @@ public class VideosDB {
                 //  actionResult is the object that will be written in the result array
                 actionResult = switch (action.getType()) {
                     case Constants.FAVORITE ->
-                            new ExecuteFavorite().addFavorite(action, inputUsers, fileWriter);
-                    case Constants.VIEW -> new ExecuteView().addView(action, inputUsers,
+                            new Favorite().addFavorite(action, inputUsers, fileWriter);
+                    case Constants.VIEW -> new View().addView(action, inputUsers,
                             fileWriter);
-                    case Constants.RATING ->  new ExecuteRating().addRating(
+                    case Constants.RATING ->  new Rating().addRating(
                             action, inputUsers, inputMovies, inputShows, fileWriter);
                     default -> actionResult;
                 };
@@ -64,7 +64,7 @@ public class VideosDB {
             case Constants.QUERY -> {
                 //  Users query
                 if (action.getObjectType().equals(Constants.USERS)) {
-                    actionResult = new ExecuteUsersQuery().queryUsers(
+                    actionResult = new UsersQuery().queryUsers(
                             action, inputUsers, fileWriter);
                 }
 
@@ -72,25 +72,25 @@ public class VideosDB {
                 if (action.getObjectType().equals(Constants.ACTORS)) {
                     actionResult = switch (action.getCriteria()) {
                         case Constants.AVERAGE ->
-                                new ExecuteActorsAverageQuery().queryActorsAverage(
+                                new ActorsAverageQuery().queryActorsAverage(
                                         action, inputActors, inputMovies, inputShows, fileWriter);
                         case Constants.AWARDS ->
-                                new ExecuteActorsAwardsQuery().queryActorsAwards(
+                                new ActorsAwardsQuery().queryActorsAwards(
                                         action, inputActors, fileWriter);
                         case Constants.FILTER_DESCRIPTIONS ->
-                                new ExecuteActorsDescriptionQuery().queryActorsWords(
+                                new ActorsDescriptionQuery().queryActorsWords(
                                         action, inputActors, fileWriter);
                         default -> actionResult;
                     };
                 }
                 //  Movies query (the type will be discussed in queryMovies() method)
                 if (action.getObjectType().equals(Constants.MOVIES)) {
-                    actionResult = new ExecuteMoviesQuery().queryMovies(
+                    actionResult = new MoviesQuery().queryMovies(
                             action, inputMovies, inputUsers, fileWriter);
                 }
                 //  Shows query (the type will be discussed in queryShows() method)
                 if (action.getObjectType().equals(Constants.SHOWS)) {
-                    actionResult = new ExecuteShowsQuery().queryShows(
+                    actionResult = new ShowsQuery().queryShows(
                             action, inputShows, inputUsers, fileWriter);
                 }
             }

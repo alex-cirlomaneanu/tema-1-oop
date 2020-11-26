@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
-public class ExecuteFavorite {
+public class Favorite {
     /**
      *
      * @param favourite the command given in input
