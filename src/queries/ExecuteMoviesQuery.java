@@ -3,10 +3,6 @@ package queries;
 import additional.FindFavoriteOccurrence;
 import additional.FindViewsNumber;
 import common.Constants;
-import fileio.ActionInputData;
-import fileio.MovieInputData;
-import fileio.UserInputData;
-import fileio.Writer;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
@@ -17,22 +13,33 @@ import java.util.List;
 
 public class ExecuteMoviesQuery {
     /**
-     * queries for movies
      *
+     * @param query the query to execute
+     * @param movies list of movies
+     * @param users list of users
+     * @param fileWriter transforms the output in a JSONObject
+     * @return JSONObject result of the query
+     * @throws IOException in case of exceptions to reading / writing
+     *
+     *  This method does the movie query given in input. Firstly it searches the movies that have
+     *  the year and/or genre asked in query. If there are found movies that respect the year and
+     *  genre, proceed to sort the movies according to the criteria (favorite, most viewed,
+     *  longest, ratings). Return the found movies in ascending or descending order.
      */
-    public JSONObject queryMovies(final ActionInputData query,
-                                  final List<MovieInputData> movies,
-                                  final List<UserInputData> users,
-                                  final Writer fileWriter) throws IOException {
+    public JSONObject queryMovies(final fileio.ActionInputData query,
+                                  final List<fileio.MovieInputData> movies,
+                                  final List<fileio.UserInputData> users,
+                                  final fileio.Writer fileWriter) throws IOException {
         //  id and message will be displayed in result array using fileWriter
         int id = query.getActionId();
         String message = "Query result: [";
         //  aux will help building the message
         StringBuilder aux = new StringBuilder();
-        List<MovieInputData> searchMovies = new ArrayList<>();
+        //  List of movies that have the correct year and/or genre.
+        List<fileio.MovieInputData> searchMovies = new ArrayList<>();
 
         //  Search for movies that respect both the year and the generes from query
-        for (MovieInputData movie : movies) {
+        for (fileio.MovieInputData movie : movies) {
             boolean correctYear = true;
             boolean correctGenre = true;
             // Use this string to compare the movie's year and query's year
@@ -46,11 +53,20 @@ public class ExecuteMoviesQuery {
                     break;
                 }
             }
+            //  If the query offers no genre or year add any movie, hoping the other criteria is
+            //  offered.
+            if (query.getFilters().get(Constants.GENRE_INDEX) == null) {
+                correctGenre = true;
+            }
+            if (query.getFilters().get(Constants.YEAR_INDEX).get(0) == null) {
+                correctYear = true;
+            }
             if (correctYear && correctGenre)    {
                 searchMovies.add(movie);
             }
         }
 
+        //  Sort movies according to the query criteria
         searchMovies.sort((firstMovie, secondMovie) -> {
             int result;
             //  Switch cases for the criteria the query uses for movies
@@ -58,7 +74,6 @@ public class ExecuteMoviesQuery {
             //  selected criteria.
             switch (query.getCriteria()) {
                 case Constants.RATINGS -> {
-                    //  In case query is by rating
                     result = Double.compare(firstMovie.getRating(), secondMovie.getRating());
                     if (result == 0) {
                         result = firstMovie.getTitle().compareTo(secondMovie.getTitle());
@@ -66,30 +81,27 @@ public class ExecuteMoviesQuery {
                     }
                 }
                 case Constants.LONGEST -> {
-                    //  In case query is by longest movie
                     result = Integer.compare(firstMovie.getDuration(),
                             secondMovie.getDuration());
                     if (result == 0) {
                         result = firstMovie.getTitle().compareTo(secondMovie.getTitle());
-                        //  Alphabetical order in case the films have the same rating
                     }
                 }
                 case Constants.FAVORITE -> {
-                    //  In case query is by favorite number
+                    //  Use additional class and method to sort movies by favorite criteria.
                     FindFavoriteOccurrence favoriteOccurrence = new FindFavoriteOccurrence();
                     int firstMovieFavNum =
-                            favoriteOccurrence.MovieFavOccurrence(firstMovie, users);
+                            favoriteOccurrence.movieFavOccurrence(firstMovie, users);
                     int secondMovieFavNum =
-                            favoriteOccurrence.MovieFavOccurrence(secondMovie, users);
+                            favoriteOccurrence.movieFavOccurrence(secondMovie, users);
                     result = Integer.compare(firstMovieFavNum,
                             secondMovieFavNum);
                     if (result == 0) {
                         result = firstMovie.getTitle().compareTo(secondMovie.getTitle());
-                        //  Alphabetical order in case the films have the same rating
                     }
                 }
                 case Constants.MOST_VIEWED -> {
-                    //  In case query is by views
+                    //  Use additional class and method to sort movies by view criteria.
                     FindViewsNumber viewsTimes = new FindViewsNumber();
                     int firstMovieViewsNum =
                             viewsTimes.findViewsMovie(firstMovie, users);
@@ -99,9 +111,9 @@ public class ExecuteMoviesQuery {
                             secondMovieViewsNum);
                     if (result == 0) {
                         result = firstMovie.getTitle().compareTo(secondMovie.getTitle());
-                        //  Alphabetical order in case the films have the same rating
                     }
                 }
+                //  Default case if the given criteria is unknown.
                 default -> throw new IllegalStateException(
                         "Unexpected value: " + query.getCriteria());
             }
@@ -109,47 +121,54 @@ public class ExecuteMoviesQuery {
             return result;
         });
 
-        if (query.getCriteria().equals(Constants.MOST_VIEWED)) {
-            //  Using an iterator to avoid ConcurrentModificationException which happen while I
-            //  try to remove a movie from the list at the same time when iterating through
-            //  the list
-            Iterator<MovieInputData> iter = searchMovies.iterator();
-            while (iter.hasNext()) {
-                FindViewsNumber viewsTimes = new FindViewsNumber();
-                MovieInputData movie = iter.next();
-                int numViews = viewsTimes.findViewsMovie(movie, users);
-                // If nobody has seen the movie, it will not be returned
-                if  (numViews == 0) {
+        //  Using an iterator to avoid ConcurrentModificationException which happen while I try to
+        //  remove a improper movie from the list at the same time when iterating through the list
+        Iterator<fileio.MovieInputData> iter = searchMovies.iterator();
+        while (iter.hasNext()) {
+            // A improper movie is one with 0 views or 0 rating or 0 favorite
+            boolean improper = false;
+            fileio.MovieInputData movie = iter.next();
+            switch (query.getCriteria()) {
+                case Constants.MOST_VIEWED -> {
+                    int numViews = new FindViewsNumber().findViewsMovie(movie, users);
+                    improper = (numViews == 0);
+                }
+                case Constants.RATINGS -> {
+                    double rating = movie.getRating();
+                    improper = (rating == 0);
+                }
+                case Constants.FAVORITE -> {
+                    int numFavorite =
+                            new FindFavoriteOccurrence().movieFavOccurrence(movie, users);
+                    improper = (numFavorite == 0);
+                }
+                case Constants.LONGEST -> {
+                    //  A movie cannot have duration 0, but use this case not to throw an error.
+                }
+                default ->
+                        throw new IllegalStateException(
+                                "Unexpected value: " + query.getCriteria());
+                }
+                if  (improper) {
                     iter.remove();
                 }
             }
-        }
-
-        //  Return the minimum number of movies between the given number and the actual size of
-        //  the list
+        //  Use the minimum number of movies between the given number and the actual list length
         int listLength = Math.min(searchMovies.size(), query.getNumber());
 
-        //  Returning the movie list in ascending order
-        if  (query.getSortType().equals(Constants.ASC)) {
-            for (int i = 0; i < listLength; ++i) {
-                aux.append(searchMovies.get(i).getTitle());
-                if (i != (searchMovies.size() - 1))    {
-                    aux.append(", ");
-                }
-            }
-        }   else if (query.getSortType().equals(Constants.DESC)) {
+       if (query.getSortType().equals(Constants.DESC)) {
             //  Revert the list in order to return the movie list in descending order
             Collections.reverse(searchMovies);
-            for (int i = 0; i < listLength; ++i) {
-                aux.append(searchMovies.get(i).getTitle());
-                if (i != (searchMovies.size() - 1))    {
-                    aux.append(", ");
-                }
-            }
-        }
-        aux.append("]");
-        message += aux.toString();
-        //  Return message
-        return fileWriter.writeFile(id, null, message);
+       }
+       for (int i = 0; i < listLength; ++i) {
+           aux.append(searchMovies.get(i).getTitle());
+           if (i != (searchMovies.size() - 1)) {
+               aux.append(", ");
+           }
+       }
+       aux.append("]");
+       message += aux.toString();
+       //  Return message
+       return fileWriter.writeFile(id, null, message);
     }
 }

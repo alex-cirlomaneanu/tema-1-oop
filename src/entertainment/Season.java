@@ -17,17 +17,12 @@ public final class Season {
      * Duration in minutes of a season
      */
     private int duration;
-//    /**
-//     * List of ratings for each season
-//     */
-//    private List<Double> ratings;
-
     /**
-     * Number of users that rated the film
+     * Added number of users that rated the film
      */
     private int numRating;
     /**
-     * Average rating
+     * Added average rating
      */
     private double rating;
 
@@ -52,15 +47,6 @@ public final class Season {
     public void setDuration(final int duration) {
         this.duration = duration;
     }
-//
-//    public List<Double> getRatings() {
-//        return ratings;
-//    }
-
-    //  Setters for rating and number of rating
-//    public void setRatings(final List<Double> ratings) {
-//        this.ratings = ratings;
-//    }
 
     public void setNumRating(final int numRating) {
         this.numRating = numRating;

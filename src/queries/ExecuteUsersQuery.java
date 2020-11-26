@@ -6,17 +6,22 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 
-/**
- * Class that has methods to solve the given query
- */
 public class ExecuteUsersQuery {
     /**
-     * query by users activity
      *
+     * @param query query given to execute
+     * @param users list of users
+     * @param fileWriter transforms the output in a JSONObject
+     * @return JSONObject result of the query
+     * @throws IOException in case of exceptions to reading / writing
+     *
+     *  This method does the users query given in input. Firstly it searches the users that have
+     *  given at least one rating. If there are found users that respect this criteria, proceed
+     *  to sort the users according to the number of times they rated a video. Return the found
+     *  users in ascending or descending order.
      */
     public JSONObject queryUsers(final fileio.ActionInputData query,
                                  final List<fileio.UserInputData> users,
@@ -27,7 +32,6 @@ public class ExecuteUsersQuery {
         String message = "Query result: [";
         //  aux will help building the message
         StringBuilder aux = new StringBuilder();
-        //  In this list I will put the users we find
         List<fileio.UserInputData> activeUsers = new ArrayList<>();
 
         for (fileio.UserInputData user : users) {
@@ -37,41 +41,33 @@ public class ExecuteUsersQuery {
            }
         }
 
-        Collections.sort(activeUsers, new Comparator<>() {
-            @Override
-            public int compare(final fileio.UserInputData user1,
-                               final fileio.UserInputData user2) {
-                //  Ascending order
-                int result = Integer.compare(user1.getRatingNumber(), user2.getRatingNumber());
-                if (result == 0) {
-                    result = user1.getUsername().compareTo(user2.getUsername());
-                    //avem nevoie alfabetic
-                }
-                return result;
+        //  Sort the active users by the number of ratings they gave with lambda function.
+        activeUsers.sort((firstUser, secondUser) -> {
+            int result = Integer.compare(firstUser.getRatingNumber(), secondUser.getRatingNumber());
+            if (result == 0) {
+                // Alphabetical sort in case the number of ratings given are the same.
+                result = firstUser.getUsername().compareTo(secondUser.getUsername());
             }
+            return result;
         });
 
-        int listLength = Math.min(activeUsers.size(), query.getNumber());
+       //  Use the minimum number of actors between the given number and the actual list length
+       int listLength = Math.min(activeUsers.size(), query.getNumber());
 
-        if  (query.getSortType().equals(Constants.ASC)) {
-            for (int i = 0; i < listLength; ++i) {
-                aux.append(activeUsers.get(i).getUsername());
-                if (i != (activeUsers.size() - 1))    {
-                    aux.append(", ");
-                }
-            }
-        }   else if (query.getSortType().equals(Constants.DESC)) {
+       //   Reverse the list in order to return the list in descending order.
+       if (query.getSortType().equals(Constants.DESC)) {
             Collections.reverse(activeUsers);
-            for (int i = 0; i < listLength; ++i) {
-                aux.append(activeUsers.get(i).getUsername());
-                if (i != (activeUsers.size() - 1))    {
-                    aux.append(", ");
-                }
-            }
-        }
-        aux.append("]");
-        message += aux.toString();
-        //  Create the json object with the data written
-        return fileWriter.writeFile(id, null, message);
+       }
+       //   Add the found users to the message.
+       for (int i = 0; i < listLength; ++i) {
+           aux.append(activeUsers.get(i).getUsername());
+           if (i != (activeUsers.size() - 1))    {
+               aux.append(", ");
+           }
+       }
+       aux.append("]");
+       message += aux.toString();
+       //  Create the json object with the data written
+       return fileWriter.writeFile(id, null, message);
     }
 }

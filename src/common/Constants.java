@@ -81,7 +81,6 @@ public final class Constants {
     public static final String ASC = "asc";
     public static final String DESC = "desc";
     public static final String AVERAGE = "average";
-    //  AWARDS_INDEX is the postion of the awards string in a query filter
     public static final int AWARDS_INDEX = 3;
     public static final int WORDS_INDEX = 2;
     public static final int GENRE_INDEX = 1;
@@ -89,6 +88,11 @@ public final class Constants {
     public static final String RATINGS = "ratings";
     public static final String MOST_VIEWED = "most_viewed";
     public static final String LONGEST = "longest";
-
+    public static final String STANDARD = "standard";
+    public static final String BEST_UNSEEN = "best_unseen";
+    public static final int ZERO = 0;
+    public static final String POPULAR = "popular";
+    public static final String PREMIUM = "PREMIUM";
+    public static final String SEARCH = "search";
 
 }

@@ -9,7 +9,17 @@ import java.util.List;
 public class ExecuteView  {
 
     /**
-     * addView
+     *
+     * @param view the command given in input
+     * @param users the list of users
+     * @param fileWriter the tool that writes the output into JSONObject
+     * @return the JSONObject result of marking the video as "viewed"
+     * @throws IOException in case of exceptions to reading / writing
+     *
+     *  This method searches the user that wants to see the title given in command. When the user
+     *  is found there are two options: we already saw the video and the number of views will be
+     *  incremented or he did not saw it therefore the video will be added in his history with 1
+     *  view.
      */
     public JSONObject addView(final fileio.ActionInputData view,
                               final List<UserInputData> users,
@@ -35,6 +45,8 @@ public class ExecuteView  {
                     numViews = user.getHistory().get(searchTitle) + 1;
                     user.getHistory().put(searchTitle, numViews);
                 }
+                //  End searching after adding a view.
+                break;
             }
         }
         //  Return message
