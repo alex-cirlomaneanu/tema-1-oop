@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class ExecuteActorsAverageQuery {
+public class ActorsAverageQuery {
     /**
      *
      * @param query query given to execute

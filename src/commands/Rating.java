@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
-public class ExecuteRating {
+public class Rating {
     /**
      *
      * @param rate the command given in input

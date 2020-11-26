@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Collections;
 
 
-public class ExecuteActorsAwardsQuery {
+public class ActorsAwardsQuery {
     /**
      *
      * @param query query given to execute

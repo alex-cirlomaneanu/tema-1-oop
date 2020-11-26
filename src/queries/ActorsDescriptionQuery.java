@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ExecuteActorsDescriptionQuery {
+public class ActorsDescriptionQuery {
     /**
      *
      * @param query query given to execute

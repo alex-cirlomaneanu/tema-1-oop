@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class ExecuteUsersQuery {
+public class UsersQuery {
     /**
      *
      * @param query query given to execute
