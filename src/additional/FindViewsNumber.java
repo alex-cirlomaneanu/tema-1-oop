@@ -4,7 +4,12 @@ import java.util.List;
 
 public class FindViewsNumber {
     /**
-     * Function used to compare movies by how many times a movie was marked as "viewed"
+     *
+     * @param movie we want to calculate total views number
+     * @param users the list of users
+     * @return total views number
+     *
+     *  Function used to help comparing movies by how many times a movie was marked as "viewed"
      */
     public int findViewsMovie(final fileio.MovieInputData movie,
                               final List<fileio.UserInputData> users) {
@@ -17,6 +22,14 @@ public class FindViewsNumber {
         return viewsNum;
     }
 
+    /**
+     *
+     * @param show we want to calculate total views number
+     * @param users the list of users
+     * @return total views number
+     *
+     *  Function used to help comparing shows by how many times a show was marked as "viewed"
+     */
     public int findViewsShow(final fileio.SerialInputData show,
                              final List<fileio.UserInputData> users) {
         int viewsNum = 0;

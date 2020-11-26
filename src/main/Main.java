@@ -3,7 +3,6 @@ package main;
 import checker.Checkstyle;
 import checker.Checker;
 import common.Constants;
-import fileio.*;
 import org.json.simple.JSONArray;
 
 import java.io.File;
@@ -64,27 +63,26 @@ public final class Main {
      */
     public static void action(final String filePath1,
                               final String filePath2) throws IOException {
-        InputLoader inputLoader = new InputLoader(filePath1);
-        Input input = inputLoader.readData();
+        fileio.InputLoader inputLoader = new fileio.InputLoader(filePath1);
+        fileio.Input input = inputLoader.readData();
 
-        Writer fileWriter = new Writer(filePath2);
+        fileio.Writer fileWriter = new fileio.Writer(filePath2);
         JSONArray arrayResult = new JSONArray();
-
-        //TODO add here the entry point to your implementation
-        List<UserInputData> inputUsers = input.getUsers();
-        List<ActionInputData> inputActions = input.getCommands();
-        List<ActorInputData> inputActors = input.getActors();
-        List<MovieInputData> inputMovies = input.getMovies();
-        List<SerialInputData> inputSerials = input.getSerials();
-        for (ActionInputData action : inputActions) {
-            /*
-              Execute all actions given in input by their type
-              */
-            arrayResult.add(new VideosDB().videosDB(action,
+        //        Read all data from input.
+        List<fileio.UserInputData> inputUsers = input.getUsers();
+        List<fileio.ActionInputData> inputActions = input.getCommands();
+        List<fileio.ActorInputData> inputActors = input.getActors();
+        List<fileio.MovieInputData> inputMovies = input.getMovies();
+        List<fileio.SerialInputData> inputShows = input.getSerials();
+        //        Proceed to execute every action given one by one using an additional class.
+        for (fileio.ActionInputData action : inputActions) {
+            //            Execute all actions given in input by their type.
+            arrayResult.add(new VideosDB().videosDB(
+                    action,
                     inputUsers,
                     inputActors,
                     inputMovies,
-                    inputSerials,
+                    inputShows,
                     fileWriter));
             }
 

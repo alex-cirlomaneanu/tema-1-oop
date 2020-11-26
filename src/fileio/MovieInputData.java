@@ -13,11 +13,11 @@ public final class MovieInputData extends ShowInput {
      */
     private final int duration;
     /**
-     * Number of users that rated the film
+     * Added number of users that rated the film
      */
     private int numRating;
     /**
-     * Average rating
+     * Added average rating
      */
     private double rating;
 

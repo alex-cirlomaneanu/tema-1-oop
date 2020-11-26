@@ -8,8 +8,10 @@ public class ShowRatingCalculator {
      *
      * @param show the show we want to find rating for
      * @return the rating of the show
+     *
+     *  Method to calculate the show rating, using every season rating.
      */
-    public double findSerialRating(SerialInputData show) {
+    public double findShowRating(final SerialInputData show) {
         double showRating = 0;
         for (entertainment.Season season : show.getSeasons())  {
             if  (season.getRating() > 0) {

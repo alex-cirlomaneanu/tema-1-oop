@@ -6,12 +6,21 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Class that has methods to solve the given commands
- */
 public class ExecuteRating {
-      /**
-     * addRating
+    /**
+     *
+     * @param rate the command given in input
+     * @param users the list of users
+     * @param movies the list of movies
+     * @param shows the list of shows
+     * @param fileWriter the tool that writes the output into JSONObject
+     * @return the JSONObject result of rating the video
+     * @throws IOException in case of exceptions to reading / writing
+     *
+     *  This method gives a rating to a video seen by user. First search the user, after search the
+     *  the title of the video (movie or show) he wants to rate. When a rating is added the
+     *  existing rating. For movies, the movie rating will be modified, for show the season rating
+     *  will be modified.
      */
     public JSONObject addRating(final fileio.ActionInputData rate,
                               final List<fileio.UserInputData> users,
@@ -62,6 +71,8 @@ public class ExecuteRating {
                         }
                     }
                 }
+                //  End searching after adding the rating
+                break;
             }
         }
         //  Searching for the user we need to add the viewed show season
@@ -106,6 +117,8 @@ public class ExecuteRating {
                         }
                     }
                 }
+                //  End searching after adding the rating
+                break;
             }
         }
         //  Return message

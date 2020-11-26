@@ -28,11 +28,11 @@ public final class ActorInputData {
      */
     private Map<ActorsAwards, Integer> awards;
     /**
-     * average rating by actor
+     * Added average rating by actor
      */
     private double actorRating;
     /**
-     * total number of ratings by actor
+     * Added total number of ratings by actor
      */
     private int ratingNum;
 

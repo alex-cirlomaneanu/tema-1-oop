@@ -26,15 +26,15 @@ public final class UserInputData {
      */
     private final ArrayList<String> favoriteMovies;
     /**
-     * Movies rated by user
+     * Added movies rated by user
      */
     private final ArrayList<String> ratedMovies;
     /**
-     * Shows added to favorites
+     * Added shows added to favorites
      */
     private final ArrayList<String> ratedShows;
     /**
-     * All ratings given by user
+     * Added all ratings given by user
      */
     private int ratingNumber;
 
@@ -47,7 +47,7 @@ public final class UserInputData {
         this.history = history;
         this.ratedMovies = new ArrayList<String>();
         this.ratedShows = new ArrayList<String>();
-        this.setRatingNumber(0);
+        this.ratingNumber = 0;
 
     }
 

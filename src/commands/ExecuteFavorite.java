@@ -8,7 +8,17 @@ import java.util.List;
 
 public class ExecuteFavorite {
     /**
-     * addFavorite
+     *
+     * @param favourite the command given in input
+     * @param users the list of users
+     * @param fileWriter the tool that writes the output into JSONObject
+     * @return the JSONObject result of adding the video to "favorite"
+     * @throws IOException in case of exceptions to reading / writing
+     *
+     *  This method searches to user that wants to add the video as favorite. In order to add the
+     *  video as favorite, the user should have seen the video, if he did not see it display an
+     *  error message. Another error is displayed when the user has already the video in favorites.
+     *  If the conditions above are met, display a succes message.
      */
     public JSONObject addFavorite(final fileio.ActionInputData favourite,
                                   final List<UserInputData> users,
@@ -38,6 +48,8 @@ public class ExecuteFavorite {
                     //  If the title we search is not marked as seen, display this error message
                     message = "error -> " + searchTitle + " is not seen";
                 }
+                //  End searching after adding a view.
+                break;
             }
         }
 
